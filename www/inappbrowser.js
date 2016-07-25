@@ -100,20 +100,39 @@
         }
 
         strUrl = urlutil.makeAbsolute(strUrl);
-        var iab = new InAppBrowser();
+        if(strWindowName === '_self') {
+            openUrl(strUrl);
+        } else {
 
-        callbacks = callbacks || {};
-        for (var callbackName in callbacks) {
-            iab.addEventListener(callbackName, callbacks[callbackName]);
+            var iab = new InAppBrowser();
+
+            callbacks = callbacks || {};
+            for (var callbackName in callbacks) {
+                iab.addEventListener(callbackName, callbacks[callbackName]);
+            }
+
+            var cb = function (eventname) {
+                iab._eventHandler(eventname);
+            };
+    
+            strWindowFeatures = strWindowFeatures || '';
+
+            exec(cb, cb, 'InAppBrowser', 'open', [strUrl, strWindowName, strWindowFeatures]);
+            return iab;
         }
-
-        var cb = function (eventname) {
-            iab._eventHandler(eventname);
-        };
-
-        strWindowFeatures = strWindowFeatures || '';
-
-        exec(cb, cb, 'InAppBrowser', 'open', [strUrl, strWindowName, strWindowFeatures]);
-        return iab;
     };
+
+    function isAndroidDevice() {
+        return window.device.platform === 'Android';
+    }
+
+    function openUrl(urlToLoad) {
+        urlToLoad += (urlToLoad.indexOf("?") !== -1 ? "&" : "?") + "marfeelcherokee=" + window.device.platform.toLocaleLowerCase();
+
+        if(isAndroidDevice()) {
+            navigator.app.loadUrl(urlToLoad);
+        } else {
+            document.location.href = urlToLoad;
+        }
+    }
 })();
