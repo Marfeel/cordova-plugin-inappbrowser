@@ -919,9 +919,8 @@ BOOL isExiting = FALSE;
     // Initialize with title if title is set, otherwise the title will be 'Done' localized
     self.closeButton = title != nil ? [[UIBarButtonItem alloc] initWithTitle:title style:UIBarButtonItemStyleBordered target:self action:@selector(close)] : [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(close)];
     self.closeButton.enabled = YES;
-    // If color on closebutton is requested then initialize with that that color, otherwise use initialize with default
-    self.closeButton.tintColor = colorString != nil ? [self colorFromHexString:colorString] : [UIColor colorWithRed:60.0 / 255.0 green:136.0 / 255.0 blue:230.0 / 255.0 alpha:1];
-    
+    self.view.tintColor = [UIColor colorWithRed:238.0 / 255.0 green:238.0 / 255.0 blue:238.0 / 255.0 alpha:1];
+
     NSMutableArray* items = [self.toolbar.items mutableCopy];
     [items replaceObjectAtIndex:buttonIndex withObject:self.closeButton];
     [self.toolbar setItems:items];
