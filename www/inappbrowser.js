@@ -122,10 +122,6 @@
         }
     };
 
-    function isAndroidDevice() {
-        return window.device.platform === 'Android';
-    }
-
     function openUrl(urlToLoad) {
         var platform = window.device.platform.toLocaleLowerCase(),
             platformVersion = window.cordova.platformVersion,
