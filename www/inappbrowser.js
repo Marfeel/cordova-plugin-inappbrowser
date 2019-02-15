@@ -127,12 +127,12 @@
     }
 
     function openUrl(urlToLoad) {
-        urlToLoad += (urlToLoad.indexOf("?") !== -1 ? "&" : "?") + "marfeelcherokee=" + window.device.platform.toLocaleLowerCase();
+        var platform = window.device.platform.toLocaleLowerCase(),
+            platformVersion = window.cordova.platformVersion,
+            hashCode = platform === 'android' ? window.marfeel.c.Configuration.AndroidInstalledPluginsMD5 : window.marfeel.c.Configuration.IOSInstalledPluginsMD5,
+            marfeelCherokeeParam = platform + '.' + platformVersion + '.' + hashCode;
 
-        if(isAndroidDevice()) {
-            navigator.app.loadUrl(urlToLoad);
-        } else {
-            document.location.href = urlToLoad;
-        }
+        urlToLoad += (urlToLoad.indexOf("?") !== -1 ? "&" : "?") + "marfeelcherokee=" + marfeelCherokeeParam;
+        document.location.href = urlToLoad;
     }
 })();
